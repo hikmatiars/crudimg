@@ -13,4 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::resource('content','ContentController');
+Route::resource('dashboard','DashboardController');
+
+Route::get('/post',['as'=>'post','uses'=>'DashboardController@post']);
+

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Content;
+//use App\Http\Request;
 
 class ContentController extends Controller
 {
@@ -13,7 +15,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -23,7 +25,7 @@ class ContentController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +36,22 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $content = new Content();
+        //dd($request);
+        /*if (!File::exists($directory)){
+            File::makeDirectory($directory, $mode=0777, true, true);
+        }*/
+
+        //$directory = public_parth()."/upload/".$content->id;
+        //Image::make($image)
+
+       
+        $content->img_name = $request->img_name;
+        $content->thumb_size = $request->thumb_size;
+        $content->img = $request->img;
+        $content->content = $request->content;
+        $content->save();
+        return redirect()->route('dashboard'); 
     }
 
     /**
@@ -43,9 +60,9 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        
     }
 
     /**
