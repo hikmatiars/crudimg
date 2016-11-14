@@ -43,11 +43,12 @@ class ContentController extends Controller
     {
         $content = new Content();
           //$directory = public_path().'/uploads';         
-        //if(Input::hasFile('img')){
+        if(Input::hasFile('img')){
+
             $file = Input::file('img');
             $images_name = $file->getClientOriginalName();
             $file->move(public_path('uploads/'),$images_name);
-        //}
+        }
 
         $content->img_name = $request->img_name;
         $content->thumb_size = 'dsad';
@@ -61,6 +62,10 @@ class ContentController extends Controller
         $content->content = $request->content;
         $content->save();
         return redirect()->route('dashboard');  */
+    }
+
+    public function detail($id){
+
     }
 
     /**

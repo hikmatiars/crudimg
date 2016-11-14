@@ -9,10 +9,12 @@
         {{HTML::style('assets/font-awesome-4.3.0/css/font-awesome.min.css')}}
         {{HTML::style('assets/material-design/css/bootstrap-material-design.min.css')}}
         {{HTML::style('assets/material-design/css/bootstrap-material-design.min.css.map')}}
-        {{HTML::style('assets/material-design/css/ripples.min.css')}}
+        
         
         {{HTML::script('assets/js/jQuery-2.1.4.min.js')}}
         {{HTML::script('assets/bootstrap/js/bootstrap.min.js')}}
+        {{HTML::script('assets/material-design/js/material.js')}}
+        {{HTML::script('assets/material-design/js/material.min.js')}}
         {{HTML::script('assets/material-design/js/material.min.js')}}
         {{HTML::script('assets/masonry/dist/masonry.pkgd.min.js')}}
     </head>

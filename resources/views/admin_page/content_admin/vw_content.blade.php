@@ -6,15 +6,25 @@
       margin-left: 50px;
       margin-right: 50px;
     }
+    .grid-item{
+      float: left;
+      width: 200px;
+      height: 180px;
+      
+    }
+
+    .grid-item--width2 { width: 160px; }
+    .grid-item--height2 { height: 140px; }  
+    
   </style>
 	<div class="row">
   <div class="col-xs-6 col-md-offset-10">
 	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"><i class="material-icons">grade</i></a>
   </div>
     <div id="panel-custom" class="panel panel-default">
-      <div class="panel-body">
+      <div  class="panel-body">
         <h3>Content</h3>
-          <div class="col-xs-12 col-sm-6 col-md-8">
+          <!-- <div class="col-xs-12 col-sm-6 col-md-8"> -->
              <div class="grid">
                <div class="grid-sizer"></div>
                @foreach($contents as $row)         
