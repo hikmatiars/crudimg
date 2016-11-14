@@ -1,27 +1,33 @@
 @extends('admin_page.side')
 	@section('page')
+  <style type="text/css">
+    #panel-custom{
+      margin-top: 70px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+  </style>
 	<div class="row">
-	<div style="margin-left: 50px;" class="col-md-4"><a href="javascript:void(0)" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"></a></div><br />
-	<div class="col-md-12">
-	 <div style="margin-top:30px; margin-left: 50px; margin-right: 50px;" class="panel panel-default">
-  		<div class="panel-body">
-    		 <h3>Content</h3>
-       		 <div class="col-md-4">
-       		 	 @foreach($contents as $row)
-             <tr>
-               <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="uploads/{{$row->img}}" alt="">
-                </a>
-            </div>
-             </tr>
-             @endforeach
-       		 </div>
-  		</div>
-	  </div>
-	  @yield('modal')
-     </div>
-	</div>
+  <div class="col-xs-6 col-md-offset-10">
+	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"><i class="material-icons">grade</i></a>
+  </div>
+    <div id="panel-custom" class="panel panel-default">
+      <div class="panel-body">
+        <h3>Content</h3>
+          <div class="col-xs-12 col-sm-6 col-md-8">
+             <div class="grid">
+               <div class="grid-sizer"></div>
+               @foreach($contents as $row)         
+               <div class="grid-item">
+                  <img class="img-responsive img-thumbnail" src="uploads/{{$row->img}}" alt="">
+               </div>
+               @endforeach  
+             </div>
+          </div><!-- close col-sm4 -->
+        
+      </div><!-- close panel body-->
+    </div><!--close panel pabel default -->
+	</div><!-- close row -->
 
 
 <div class="modal" id="Mymodal">
@@ -37,7 +43,7 @@
            			{!! Form::text('img_name',null,['placeholder'=>'Image name','class'=>'form-control']) !!}
            		</div>
            		<div class="form-group">
-           			{!! Form::label('image','Image')!!}
+           			{!! Form::label('image','Image') !!}
            			{!! Form::file('img') !!}
            		</div>
            		<div class="form-group">
@@ -53,9 +59,13 @@
     </div>
   </div>
 </div>
+
 	<script type="text/javascript">
 		$(function(){
-			$.material.init();	
+			$('.grid').masonry({
+        columnWidth: 200,
+        itemSelector: '.grid-item'
+      });	
 		});
 	</script>
 	@endsection
