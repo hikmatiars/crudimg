@@ -13,7 +13,7 @@ class ContentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class ContentRequest extends FormRequest
     public function rules()
     {
         return [
-            'img_name'      =>'required',
+            'img_name'      =>'required|max:10',
             'thumb_size'    =>'required',
             'img'           =>'required|mimes:jpeg,bmp,png',
             'content'       =>'required|max:50'
@@ -34,6 +34,7 @@ class ContentRequest extends FormRequest
     public function messages(){
         return [
             'img_name.required'     => 'Image name dont blank',
+            'img_name.max'          => 'tes maximum',
             'thumb_size.required'   => '',
             'img.required'          => 'Image dont blank',
             'img.mimes'             => 'file must .jpeg .bmp or .png format',

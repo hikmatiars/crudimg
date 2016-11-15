@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Route::resource('content','ContentController');
 Route::resource('dashboard','DashboardController');
-Route::get('/post',['as'=>'post','uses'=>'DashboardController@post']);
+//Route::resource('post',)
+Route::get('/main',['as'=>'post','uses'=>'DashboardController@post']);
 

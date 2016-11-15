@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Content;
 use App\file;
-use App\Http\Requests;
+//use App\Http\Requests;
+use App\Http\Requests\ContentRequest;
 //use Illuminate\Support\Facades\Input;
 
 
@@ -39,7 +40,7 @@ class ContentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContentRequest $request)
     {
         $content = new Content();
           //$directory = public_path().'/uploads';         
@@ -55,6 +56,7 @@ class ContentController extends Controller
         $content->img = $images_name;
         $content->content = $request->content;
         $content->save();
+        return redirect()->route('post');
         /*
         $content->img_name = $request->img_name;
         $content->thumb_size = $request->thumb_size;

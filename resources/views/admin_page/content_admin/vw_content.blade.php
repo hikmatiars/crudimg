@@ -21,6 +21,15 @@
   <div class="col-xs-6 col-md-offset-10">
 	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"><i class="material-icons">grade</i></a>
   </div>
+  <!--
+  @if ($errors->count() > 0)
+    <p>Error</p>
+    <ul>
+      @foreach($errors->all() as $message)
+        <li>{{$message}}</li>
+      @endforeach  
+    </ul>
+   @endif -->
     <div id="panel-custom" class="panel panel-default">
       <div  class="panel-body">
         <h3>Content</h3>
@@ -59,12 +68,13 @@
            		<div class="form-group">
            			{!! Form::textarea('content',null,['placeholder'=>'Silahkan isi content','class'=>'form-control']) !!}
            		</div>
-           			{!! Form::submit('save',['class'=>'btn btn-success']) !!}
-           		{!! Form::close() !!}
+           			
+           		
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save </button>
+        {!! Form::close() !!}
       </div>
     </div>
   </div>
