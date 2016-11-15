@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ContentRequest;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Content;
 
 
@@ -47,7 +48,8 @@ class ContentController extends Controller
         $content = new Content();
          
         $file = Input::file('img');
-        $image_name = $content->id.$file->getClientOriginalName();
+        $image = Image::make(Input::file('img'));
+        $image_name = $file->getClientOriginalName();
 
         $content->img_name = $request->img_name;
         $content->thumb_size = 'dsad';
@@ -55,11 +57,16 @@ class ContentController extends Controller
         $content->content = $request->content;
         $content->save();
 
-        
-        $directory = public_path()."/uploads/".$content->id;   
+        //creating thumbnail 
+
+        $directory = public_path().'/uploads/'.$content->id;   
         if (!File::exists($directory)){
-         File::makeDirectory($directory, $mode=0777,true,true);   
-         $file->move(public_path('uploads/'.$content->id),$image_name);
+         File::makeDirectory($directory, $mode=0777,true,true);
+         //$image->save(public_path('uploads/'.$content->id), $image_name);
+         $file->move($directory,$image_name);
+         $image->resize(200,100);   
+         $image->save($directory,'thumb_'.$image_name);
+         
        }
 
         return redirect()->route('post');

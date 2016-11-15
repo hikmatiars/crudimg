@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('home'); */
 
 Route::resource('content','ContentController');
 Route::resource('dashboard','DashboardController');
 //Route::resource('post',)
-Route::get('/main',['as'=>'post','uses'=>'DashboardController@post']);
+Route::get('/',['as'=>'post','uses'=>'DashboardController@post']);
 

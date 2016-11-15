@@ -19,7 +19,7 @@
   </style>
 	<div class="row">
   <div class="col-xs-6 col-md-offset-10">
-	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"></a>
+	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
   </div>
   
   @if ($errors->count() > 0)
@@ -61,12 +61,21 @@
       </div>
       <div class="modal-body">
         {!! Form::open(['route'=>'content.store', 'files'=>true]) !!}
-           		<div class="form-group">
-           			{!! Form::text('img_name',null,['placeholder'=>'Image name','class'=>'form-control']) !!}
+           		<div class="form-group  label-floating">
+                {!! Form::label('Image name',null,['class'=>'control-label','for'=>'img_name'])!!}
+           			{!! Form::text('img_name',null,['class'=>'form-control','id'=>'img_name']) !!}
+                <span class="help-block">Name image should not exceed 10 character</span>  
            		</div>
-           		<div class="form-group">
-           			{!! Form::label('image','Image') !!}
-           			{!! Form::file('img') !!}
+              <div class="form-group">
+              {!! Form::file('img') !!}
+           			<div class="input-group">
+                  {!! Form::text(null,null,['class'=>'form-control','readonly'=>'', 'placeholder'=>'File chooser']) !!}
+                    <span class="input-group-btn input-group-sm">
+                       <button type="button" class="btn btn-fab btn-fab-mini">
+                        <i class="material-icons">attach_file</i>
+                      </button>
+                    </span>
+                </div>
            		</div>
            		<div class="form-group">
            			{!! Form::textarea('content',null,['placeholder'=>'Silahkan isi content','class'=>'form-control']) !!}
