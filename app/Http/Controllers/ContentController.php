@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use App\Content;
-use App\file;
-//use App\Http\Requests;
 use App\Http\Requests\ContentRequest;
-//use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
+use App\Content;
+
 
 
 class ContentController extends Controller
@@ -18,6 +17,8 @@ class ContentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public $images_name;
     public function index()
     {
         //$content = Content::all();
@@ -40,30 +41,29 @@ class ContentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+   
     public function store(ContentRequest $request)
     {
         $content = new Content();
-          //$directory = public_path().'/uploads';         
-        if(Input::hasFile('img')){
-
-            $file = Input::file('img');
-            $images_name = $file->getClientOriginalName();
-            $file->move(public_path('uploads/'),$images_name);
-        }
+         
+        $file = Input::file('img');
+        $image_name = $content->id.$file->getClientOriginalName();
 
         $content->img_name = $request->img_name;
         $content->thumb_size = 'dsad';
-        $content->img = $images_name;
+        $content->img = $image_name;
         $content->content = $request->content;
         $content->save();
+
+        
+        $directory = public_path()."/uploads/".$content->id;   
+        if (!File::exists($directory)){
+         File::makeDirectory($directory, $mode=0777,true,true);   
+         $file->move(public_path('uploads/'.$content->id),$image_name);
+       }
+
         return redirect()->route('post');
-        /*
-        $content->img_name = $request->img_name;
-        $content->thumb_size = $request->thumb_size;
-        $content->img = $request->img;
-        $content->content = $request->content;
-        $content->save();
-        return redirect()->route('dashboard');  */
+        
     }
 
     public function detail($id){

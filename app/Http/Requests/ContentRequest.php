@@ -25,7 +25,6 @@ class ContentRequest extends FormRequest
     {
         return [
             'img_name'      =>'required|max:10',
-            'thumb_size'    =>'required',
             'img'           =>'required|mimes:jpeg,bmp,png',
             'content'       =>'required|max:50'
         ];
@@ -35,11 +34,10 @@ class ContentRequest extends FormRequest
         return [
             'img_name.required'     => 'Image name dont blank',
             'img_name.max'          => 'tes maximum',
-            'thumb_size.required'   => '',
             'img.required'          => 'Image dont blank',
             'img.mimes'             => 'file must .jpeg .bmp or .png format',
             'content.required'      => 'content dont blank',
-            'content.max'           =>  'content max>50'
+            'content.max'           => 'content max>50'
         ];
     }
 }

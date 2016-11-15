@@ -19,17 +19,20 @@
   </style>
 	<div class="row">
   <div class="col-xs-6 col-md-offset-10">
-	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"><i class="material-icons">grade</i></a>
+	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-primary btn-fab"></a>
   </div>
-  <!--
+  
   @if ($errors->count() > 0)
-    <p>Error</p>
-    <ul>
       @foreach($errors->all() as $message)
-        <li>{{$message}}</li>
+      <div id="panel-custom" class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Error</strong>
+          {{$message}}
+      </div>
       @endforeach  
-    </ul>
-   @endif -->
+  @endif 
+
+
     <div id="panel-custom" class="panel panel-default">
       <div  class="panel-body">
         <h3>Content</h3>
@@ -38,7 +41,7 @@
                <div class="grid-sizer"></div>
                @foreach($contents as $row)         
                <div class="grid-item">
-                  <img class="img-responsive img-thumbnail" src="uploads/{{$row->img}}" alt="">
+                  <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/{{$row->img}}" alt="">
                </div>
                @endforeach  
              </div>
