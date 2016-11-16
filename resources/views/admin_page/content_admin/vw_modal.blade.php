@@ -1,5 +1,3 @@
-@extends('admin_page.vw_content')
-  @section('modal')
 <div class="modal" id="Mymodal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -17,4 +15,3 @@
     </div>
   </div>
 </div>
- @endsection

@@ -2,7 +2,6 @@
 	@section('page')
   <style type="text/css">
     #panel-custom{
-      margin-top: 70px;
       margin-left: 50px;
       margin-right: 50px;
     }
@@ -45,26 +44,26 @@
   <div class="col-xs-6 col-md-offset-10">
 	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
   </div>
-
+    <div class="col-xs-12 col-sm-6  col-md-8">
     <div id="panel-custom" class="panel panel-default">
       <div  class="panel-body">
         <h3>Content</h3>
-          <!-- <div class="col-xs-12 col-sm-6 col-md-8"> -->
+          
              <div class="grid">
                <div class="grid-sizer"></div>
                @foreach($contents as $row)         
                <div class="grid-item">
-                  <a class="detail" id="{{$row->id}}">
-                  <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
+                  <a data-toggle="modal" data-target="#detailModal" class="detail" id="{{$row->id}}">
+                    <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
                   </a>
                </div>
                @endforeach  
              </div>
-          </div><!-- close col-sm4 -->
-        
+          
       </div><!-- close panel body-->
     </div><!--close panel pabel default -->
-	</div><!-- close row -->
+    </div><!-- close col-sm4 -->
+  </div><!-- close row -->
 
 
 <div class="modal" id="Mymodal">
@@ -104,35 +103,7 @@
     </div>
   </div>
 </div>
-
-	<script type="text/javascript">
-  $(document).ready(function(){
-    $("#load").hide();
-      $(".detail").click(function(){
-          $("#load").show();
-         
-          var dataId = {
-            id : $(this).attr('id') 
-          } 
-          $.ajax({
-            type      : "GET",
-            url       : "/content/{content}",
-            data      : dataId,
-            dataType  : "json",
-            cache     : false,
-            success   : function(data){
-              console.log(data);
-
-            }, error: function(xhr, status, error){
-              console.log(error);
-            },
-          });//close ajax
-      }); //close function
-      	
-			$('.grid').masonry({
-        columnWidth: 200,
-        itemSelector: '.grid-item'
-      });	
-		 }); // close 
-	</script>
+  @include('admin_page/content_admin/vw_modal_detail')
+  @include('admin_page/content_admin/js_content')
+	
 	@endsection
