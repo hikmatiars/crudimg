@@ -87,8 +87,7 @@ class ContentController extends Controller
     public function show(Request $request)
     {
         $image = Content::find($request->id);
-        $debug = dd($image);
-        echo json_encode($debug);
+        return response()->json($image);
     }
 
     /**

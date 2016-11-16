@@ -76,27 +76,25 @@
       </div>
       <div class="modal-body">
         {!! Form::open(['route'=>'content.store', 'files'=>true]) !!}
-           		<div class="form-group  label-floating">
-                {!! Form::label('Image name',null,['class'=>'control-label','for'=>'img_name'])!!}
-           			{!! Form::text('img_name',null,['class'=>'form-control','id'=>'img_name']) !!}
-                <span class="help-block">Name image should not exceed 10 character</span>  
-           		</div>
-              <div class="form-group">
-              {!! Form::file('img') !!}
-           			<div class="input-group">
-                  {!! Form::text(null,null,['class'=>'form-control','readonly'=>'', 'placeholder'=>'File chooser']) !!}
-                    <span class="input-group-btn input-group-sm">
-                       <button type="button" class="btn btn-fab btn-fab-mini">
-                        <i class="material-icons">attach_file</i>
-                      </button>
-                    </span>
-                </div>
-           		</div>
+           	<div class="form-group  label-floating">
+              {!! Form::label('Image name',null,['class'=>'control-label','for'=>'img_name'])!!}
+           		{!! Form::text('img_name',null,['class'=>'form-control','id'=>'img_name']) !!}
+              <span class="help-block">Name image should not exceed 10 character</span>  
+           	</div>
+            <div class="form-group">
+             {!! Form::file('img') !!}
+           		<div class="input-group">
+                {!! Form::text(null,null,['class'=>'form-control','readonly'=>'', 'placeholder'=>'File chooser']) !!}
+                  <span class="input-group-btn input-group-sm">
+                     <button type="button" class="btn btn-fab btn-fab-mini">
+                      <i class="material-icons">attach_file</i>
+                    </button>
+                  </span>
+              </div>
+           	</div>
            		<div class="form-group">
            			{!! Form::textarea('content',null,['placeholder'=>'Silahkan isi content','class'=>'form-control']) !!}
            		</div>
-           			
-           		
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -111,13 +109,14 @@
   $(document).ready(function(){
     $("#load").hide();
       $(".detail").click(function(){
-          //$("#load").show();
+          $("#load").show();
+         
           var dataId = {
             id : $(this).attr('id') 
           } 
           $.ajax({
-            type      : "POST",
-            url       : "{{route('detail')}}",
+            type      : "GET",
+            url       : "/content/{content}",
             data      : dataId,
             dataType  : "json",
             cache     : false,
@@ -125,8 +124,7 @@
               console.log(data);
 
             }, error: function(xhr, status, error){
-
-              console.log(xhr);
+              console.log(error);
             },
           });//close ajax
       }); //close function
