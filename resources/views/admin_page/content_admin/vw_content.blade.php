@@ -10,28 +10,41 @@
       float: left;
       width: 200px;
       height: 180px;
-      
     }
-
+    #load { height: 100%; width: 100%; }
+    #load {
+    position    : fixed;
+    z-index     : 99999; /* or higher if necessary */
+    top         : 0;
+    left        : 0;
+    overflow    : hidden;
+    text-indent : 100%;
+    font-size   : 0;
+    opacity     : 0.6;
+    background  : #E0E0E0  url('css/load.gif') center no-repeat;
+  }
     .grid-item--width2 { width: 160px; }
     .grid-item--height2 { height: 140px; }  
     
   </style>
+  <div id="load">waitttt</div>
 	<div class="row">
-  <div class="col-xs-6 col-md-offset-10">
-	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
-  </div>
-  
-  @if ($errors->count() > 0)
+
+     @if ($errors->count() > 0)
       @foreach($errors->all() as $message)
+      <div id="notif">
       <div id="panel-custom" class="alert alert-dismissible alert-danger">
           <button type="button" class="close" data-dismiss="alert">×</button>
           <strong>Error</strong>
           {{$message}}
       </div>
+      </div>
       @endforeach  
-  @endif 
+  @endif  
 
+  <div class="col-xs-6 col-md-offset-10">
+	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
+  </div>
 
     <div id="panel-custom" class="panel panel-default">
       <div  class="panel-body">
@@ -41,7 +54,9 @@
                <div class="grid-sizer"></div>
                @foreach($contents as $row)         
                <div class="grid-item">
-                  <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/{{$row->img}}" alt="">
+                  <a class="detail" id="{{$row->id}}">
+                  <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
+                  </a>
                </div>
                @endforeach  
              </div>
@@ -93,11 +108,33 @@
 </div>
 
 	<script type="text/javascript">
-		$(function(){
+  $(document).ready(function(){
+    $("#load").hide();
+      $(".detail").click(function(){
+          //$("#load").show();
+          var dataId = {
+            id : $(this).attr('id') 
+          } 
+          $.ajax({
+            type      : "POST",
+            url       : "{{route('detail')}}",
+            data      : dataId,
+            dataType  : "json",
+            cache     : false,
+            success   : function(data){
+              console.log(data);
+
+            }, error: function(xhr, status, error){
+
+              console.log(xhr);
+            },
+          });//close ajax
+      }); //close function
+      	
 			$('.grid').masonry({
         columnWidth: 200,
         itemSelector: '.grid-item'
       });	
-		});
+		 }); // close 
 	</script>
 	@endsection

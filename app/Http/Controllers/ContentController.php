@@ -7,6 +7,7 @@ use App\Http\Requests\ContentRequest;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
+//use Image;
 use App\Content;
 
 
@@ -48,7 +49,7 @@ class ContentController extends Controller
         $content = new Content();
          
         $file = Input::file('img');
-        $image = Image::make(Input::file('img'));
+        $image = Image::make($request->file('img'));
         $image_name = $file->getClientOriginalName();
 
         $content->img_name = $request->img_name;
@@ -62,19 +63,19 @@ class ContentController extends Controller
         $directory = public_path().'/uploads/'.$content->id;   
         if (!File::exists($directory)){
          File::makeDirectory($directory, $mode=0777,true,true);
-         //$image->save(public_path('uploads/'.$content->id), $image_name);
-         $file->move($directory,$image_name);
-         $image->resize(200,100);   
-         $image->save($directory,'thumb_'.$image_name);
-         
+         $image->save($directory.'/'.$image_name);
+         $image->resize(200,100)->save($directory.'/'.'thumb_'.$image_name);
+         return redirect()->route('post');
        }
 
-        return redirect()->route('post');
+        
         
     }
 
-    public function detail($id){
-
+    public function detail(Request $request){
+       $image = Content::find($request->id);
+       $debug = dd($image);
+       echo json_encode($debug);
     }
 
     /**
@@ -85,7 +86,9 @@ class ContentController extends Controller
      */
     public function show(Request $request)
     {
-        
+        $image = Content::find($request->id);
+        $debug = dd($image);
+        echo json_encode($debug);
     }
 
     /**
