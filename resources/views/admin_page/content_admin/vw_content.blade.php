@@ -2,6 +2,7 @@
 	@section('page')
   <style type="text/css">
     #panel-custom{
+      margin-top: 60px;
       margin-left: 50px;
       margin-right: 50px;
     }
@@ -39,25 +40,31 @@
       </div>
       </div>
       @endforeach  
-  @endif  
+     @endif  
 
-  <div class="col-xs-6 col-md-offset-10">
-	 <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
+  <div class="col-xs-12 col-sm-6 col-md-offset-10">
+	   <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
   </div>
-    <div class="col-xs-12 col-sm-6  col-md-8">
+    <div class="">
+    <div class="col-sm-12 col-md-12">
     <div id="panel-custom" class="panel panel-default">
       <div  class="panel-body">
         <h3>Content</h3>
-          
              <div class="grid">
                <div class="grid-sizer"></div>
-               @foreach($contents as $row)         
-               <div class="grid-item">
-                  <a data-toggle="modal" data-target="#detailModal" class="detail" id="{{$row->id}}">
-                    <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
-                  </a>
+               @foreach($contents as $row) 
+                <div class="panel panel-default">       
+                  <div class="grid-item">
+                    <div class="panel-body">
+                     <a data-toggle="modal" data-target="#detailModal" class="detail" id="{{$row->id}}">
+                      <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
+                    </a>
+                    <div class="panel-footer">{{$row->img_name}}</div>
+                    </div>
+                    
+                  </div>
                </div>
-               @endforeach  
+               @endforeach
              </div>
           
       </div><!-- close panel body-->
@@ -90,7 +97,7 @@
                     </button>
                   </span>
               </div>
-           	</div>
+           	</div><!-- close form-group-->
            		<div class="form-group">
            			{!! Form::textarea('content',null,['placeholder'=>'Silahkan isi content','class'=>'form-control']) !!}
            		</div>

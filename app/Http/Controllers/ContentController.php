@@ -20,11 +20,10 @@ class ContentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public $images_name;
+   
     public function index()
     {
-        //$content = Content::all();
-        //return view('');
+        
     }
 
     /**
@@ -36,6 +35,8 @@ class ContentController extends Controller
     {
         
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -63,19 +64,13 @@ class ContentController extends Controller
         $directory = public_path().'/uploads/'.$content->id;   
         if (!File::exists($directory)){
          File::makeDirectory($directory, $mode=0777,true,true);
-         $image->save($directory.'/'.$image_name);
+         $image->resize(400,200)->save($directory.'/'.$image_name);
          $image->resize(200,100)->save($directory.'/'.'thumb_'.$image_name);
          return redirect()->route('post');
        }
 
         
         
-    }
-
-    public function detail(Request $request){
-       $image = Content::find($request->id);
-       $debug = dd($image);
-       echo json_encode($debug);
     }
 
     /**
@@ -86,8 +81,8 @@ class ContentController extends Controller
      */
     public function show(Request $request)
     {
-        $image = Content::find($request->id);
-        return response()->json($image);
+        $content = Content::find($request->id);
+        return response()->json($content);
     }
 
     /**
@@ -96,9 +91,9 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+          
     }
 
     /**
@@ -108,9 +103,13 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+       if ($request::ajax()){
+            $content = Content::find($request->id); 
+            $deb = dd($content);
+        return response()->json($deb);  
+       }    
     }
 
     /**
@@ -121,6 +120,8 @@ class ContentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $content = Content::findOrFail($id);
+        $content->delete();
+        
     }
 }
