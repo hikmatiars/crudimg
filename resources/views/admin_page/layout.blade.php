@@ -23,6 +23,13 @@
 	<body>
 		@yield('content')
 	</body>
+    <footer>
+        <div class="row">
+            <div class="col-md-8">
+                
+            </div>
+        </div>
+    </footer>
     <script type="text/javascript">
         $.material.init();
     </script>

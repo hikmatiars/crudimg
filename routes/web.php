@@ -21,3 +21,5 @@ Route::resource('dashboard','DashboardController');
 Route::post('/detail/show',['as'=>'detail','uses'=>'ContentController@show']);
 Route::get('/',['as'=>'post','uses'=>'DashboardController@post']);
 Route::post('/content/update','ContentController@update')->name('update');
+Route::post('/content/destroy','ContentController@destroy')->name('delete');
+

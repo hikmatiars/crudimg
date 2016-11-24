@@ -1,55 +1,83 @@
 <script type="text/javascript">
-  $(document).ready(function(){
-    
+$(document).ready(function(){
+    //var url = "content/{content}";
     $("#load").hide();
+      $("#btn_input").click(function(){
+        $.ajax({
+          url : 'content/',
+          data : new FormData($("#upload_form")[0]),
+          dataType : 'json',
+          type : 'post',
+          success : function(data){
+            console.log(data);
+          },
+        });
+      });
       $(".detail").click(function(){
          $("#load").show();
+
           var dataId = {
             id : $(this).attr('id') 
           }
+          var id = $(this).attr('id');
 
           $.ajax({
             type      : "GET",
-            url       : "/content/{content}",
-            data      : dataId,
-            dataType  : "json",
+            url       : "/content/"+id+"/edit",
+            //data      : dataId,
+            //dataType  : "json",
             success   : function(data){
               console.log(data);
               $("#load").delay(5000).hide();
               $("#show_title").html(data.img_name);
-              $("#img_nameEdt").val(data.img_name).html(data.img_name);
+              $("#img_nameEdt").val(data.img_name);
               $("#imgId").val(data.id);
-              $("#show_img").attr("src",'uploads/'+data.id+'/thumb_'+data.img);
+              $("#img").val(data.img);
+              $("#imgEdt").html(data.img);
+              $("#show_img").attr("src",'uploads/'+data.id+'/'+data.img);
               $("#show_dateCreated").html(data.created_at);
-            },
+              $("#content").val(data.content);
+            }, error(xhr, status, error){
+              //console.log(error);
+            }
           });//close ajax
       }); //close function
 
       $("#updateBtn").click(function(){
         var id = $("#imgId").val();
         var data = {
-          id : $("#imgId").val(),
+          '_token'   : $('input[name=_token]').val(),
+          'id'       : $("#imgId").val(),
+          'img_name' : $("#img_nameEdt").val(),
+          'content'  : $("#content").val()
         };
         $.ajax({
-          type : "POST",
-          url  : "{{route('update')}}",
+          type : "PUT",
+          url  : "/content/"+id,
           data : data,
-          dataType : "json",
-          success : function(data){
+          dataType  : "json",
+          success   : function(data){
             console.log(data);
           }, error: function (xhr, status, error){
               console.log(error);
           }
         });//close ajax
       });
+      
       	
       $("#deleteBtn").click(function(){
-        var id = $("#imgId").val();
+       var data = {
+          '_token': $('input[name=_token]').val(),
+          'id' : $("#imgId").val()
+        };
         $.ajax({
           type : "DELETE",
-          url  : "/content/"+id,
+          url  : url,
+          data : data,
+          dataType : "json",
           success : function(data){
-            console.log(data);
+            $("#item"+data.id).remove().slideDown("slow");
+            //tostr().success("data berhasil di hapus");
           }, error: function (xhr, status, error){
               console.log(error);
           }
@@ -59,7 +87,7 @@
 
         
 			$('.grid').masonry({
-        columnWidth: 200,
+        columnWidth: 300,
         itemSelector: '.grid-item'
       });	
 		 }); // close 

@@ -2,14 +2,14 @@
 	@section('page')
   <style type="text/css">
     #panel-custom{
-      margin-top: 60px;
+      margin-top: 40px;
       margin-left: 50px;
       margin-right: 50px;
     }
     .grid-item{
       float: left;
       width: 200px;
-      height: 180px;
+      height: 200px;
     }
     #load { height: 100%; width: 100%; }
     #load {
@@ -27,6 +27,7 @@
     .grid-item--height2 { height: 140px; }  
     
   </style>
+
   <div id="load">waitttt</div>
 	<div class="row">
 
@@ -42,31 +43,29 @@
       @endforeach  
      @endif  
 
-  <div class="col-xs-12 col-sm-6 col-md-offset-10">
-	   <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary btn-lg"><i class="material-icons">add_box</i></a>
+  <div class="col-xs-12 col-sm-2 pull-right">
+	   <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary"><i class="material-icons">add_box</i></a>
   </div>
-    <div class="">
-    <div class="col-sm-12 col-md-12">
+  <div class="">
+    <div class="col-xs-12 col-md-12">
     <div id="panel-custom" class="panel panel-default">
       <div  class="panel-body">
-        <h3>Content</h3>
-             <div class="grid">
+          <div class="grid">
                <div class="grid-sizer"></div>
                @foreach($contents as $row) 
-                <div class="panel panel-default">       
+                <div id="item{{$row->id}}" class="panel panel-success">       
                   <div class="grid-item">
                     <div class="panel-body">
                      <a data-toggle="modal" data-target="#detailModal" class="detail" id="{{$row->id}}">
-                      <img class="img-responsive img-thumbnail" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
+                      <img class="img-responsive img-thumbnail" data-toggle="tooltip" data-placement="bottom" data-original-title="tess" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
                     </a>
-                    <div class="panel-footer">{{$row->img_name}}</div>
+                    <div class="panel-footer panel">{{$row->content}}</div>
                     </div>
                     
                   </div>
                </div>
                @endforeach
              </div>
-          
       </div><!-- close panel body-->
     </div><!--close panel pabel default -->
     </div><!-- close col-sm4 -->
@@ -81,8 +80,8 @@
         <h4 class="modal-title">Post Content</h4>
       </div>
       <div class="modal-body">
-        {!! Form::open(['route'=>'content.store', 'files'=>true]) !!}
-           	<div class="form-group  label-floating">
+        {!! Form::open(['route'=>'content.store', 'files'=>true,'id'=>'upload_form','enctype'=>'multipart/form-data']) !!}
+           	<div class="form-group label-floating">
               {!! Form::label('Image name',null,['class'=>'control-label','for'=>'img_name'])!!}
            		{!! Form::text('img_name',null,['class'=>'form-control','id'=>'img_name']) !!}
               <span class="help-block">Name image should not exceed 10 character</span>  
@@ -104,7 +103,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save </button>
+        <button type="submit" id="btn_input" class="btn btn-primary">Save </button>
         {!! Form::close() !!}
       </div>
     </div>

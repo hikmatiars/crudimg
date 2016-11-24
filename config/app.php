@@ -140,6 +140,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+       
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
@@ -230,7 +231,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'HTML'  => Collective\Html\HtmlFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        
 
     ],
 

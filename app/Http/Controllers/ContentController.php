@@ -45,33 +45,20 @@ class ContentController extends Controller
      * @return \Illuminate\Http\Response
      */
    
-    public function store(ContentRequest $request)
+    public static function store(ContentRequest $request)
     {
-        $content = new Content();
-         
-        $file = Input::file('img');
+
+        if ($request::ajax()){
+            $method = $request->method();
         $image = Image::make($request->file('img'));
-        $image_name = $file->getClientOriginalName();
-
-        $content->img_name = $request->img_name;
-        $content->thumb_size = 'dsad';
-        $content->img = $image_name;
-        $content->content = $request->content;
-        $content->save();
-
-        //creating thumbnail 
-
-        $directory = public_path().'/uploads/'.$content->id;   
-        if (!File::exists($directory)){
-         File::makeDirectory($directory, $mode=0777,true,true);
-         $image->resize(400,200)->save($directory.'/'.$image_name);
-         $image->resize(200,100)->save($directory.'/'.'thumb_'.$image_name);
-         return redirect()->route('post');
-       }
-
-        
-        
-    }
+        $image_name = Input::file('img')->getClientOriginalName();
+        $title = $request->img_name;
+        $thumb_size = 'thumb_'.$request->img_name;
+        $inputContent = $request->content;
+        Content::save_image($image, $image_name, $title, $thumb_size, $inputContent, $method);
+        return redirect()->route('post');
+        }
+     }
 
     /**
      * Display the specified resource.
@@ -91,9 +78,11 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-          
+      $content = Content::find($id);
+      
+        return response()->json($content);   
     }
 
     /**
@@ -105,23 +94,31 @@ class ContentController extends Controller
      */
     public function update(Request $request)
     {
-       if ($request::ajax()){
-            $content = Content::find($request->id); 
-            $deb = dd($content);
-        return response()->json($deb);  
-       }    
+        
+        $method = $request->method();
+        $image = Image::make($request->file('img'));
+        $image_name = Input::file('img')->getClientOriginalName();
+        $title = $request->img_name;
+        $thumb_size = 'thumb_'.$request->img_name;
+        $inputContent = $request->content;
+        Content::save_image($image, $image_name, $title, $thumb_size, $inputContent, $method);
+        return redirect()->route('post');
+        return response()->json($content);
     }
-
+       
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $content = Content::findOrFail($id);
-        $content->delete();
-        
+         $content = Content::find($request->id);
+         $content->delete();
+         $directory = public_path().'/uploads/'.$content->id; 
+         File::deleteDirectory($directory);
+         return response()->json($content);
+
     }
 }
