@@ -48,16 +48,15 @@ class ContentController extends Controller
     public static function store(ContentRequest $request)
     {
 
-        if ($request::ajax()){
-            $method = $request->method();
-        $image = Image::make($request->file('img'));
+        $method = $request->method();
+        $image  = Image::make($request->file('img'));
         $image_name = Input::file('img')->getClientOriginalName();
-        $title = $request->img_name;
+        $title      = $request->img_name;
         $thumb_size = 'thumb_'.$request->img_name;
         $inputContent = $request->content;
-        Content::save_image($image, $image_name, $title, $thumb_size, $inputContent, $method);
-        return redirect()->route('post');
-        }
+        $content = Content::save_image($image, $image_name, $title, $thumb_size, $inputContent, $method);
+        return response()->json($content);
+        
      }
 
     /**
@@ -92,7 +91,7 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ContentRequest $request)
     {
         
         $method = $request->method();
@@ -102,7 +101,6 @@ class ContentController extends Controller
         $thumb_size = 'thumb_'.$request->img_name;
         $inputContent = $request->content;
         Content::save_image($image, $image_name, $title, $thumb_size, $inputContent, $method);
-        return redirect()->route('post');
         return response()->json($content);
     }
        
@@ -119,6 +117,5 @@ class ContentController extends Controller
          $directory = public_path().'/uploads/'.$content->id; 
          File::deleteDirectory($directory);
          return response()->json($content);
-
     }
 }

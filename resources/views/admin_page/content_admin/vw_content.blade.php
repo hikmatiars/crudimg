@@ -42,7 +42,6 @@
       </div>
       @endforeach  
      @endif  
-
   <div class="col-xs-12 col-sm-2 pull-right">
 	   <a href="#" data-toggle="modal" data-target="#Mymodal" class="btn btn-raised btn-primary"><i class="material-icons">add_box</i></a>
   </div>
@@ -59,9 +58,8 @@
                      <a data-toggle="modal" data-target="#detailModal" class="detail" id="{{$row->id}}">
                       <img class="img-responsive img-thumbnail" data-toggle="tooltip" data-placement="bottom" data-original-title="tess" src="uploads/{{$row->id}}/thumb_{{$row->img}}" alt="">
                     </a>
-                    <div class="panel-footer panel">{{$row->content}}</div>
+                    <div class="panel-footer panel">{{$row->img_name}}</div>
                     </div>
-                    
                   </div>
                </div>
                @endforeach
@@ -80,7 +78,7 @@
         <h4 class="modal-title">Post Content</h4>
       </div>
       <div class="modal-body">
-        {!! Form::open(['route'=>'content.store', 'files'=>true,'id'=>'upload_form','enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['files'=>true,'id'=>'upload_form','enctype'=>'multipart/form-data']) !!}
            	<div class="form-group label-floating">
               {!! Form::label('Image name',null,['class'=>'control-label','for'=>'img_name'])!!}
            		{!! Form::text('img_name',null,['class'=>'form-control','id'=>'img_name']) !!}
@@ -103,7 +101,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" id="btn_input" class="btn btn-primary">Save </button>
+        <button type="button" id="btn_input" class="btn btn-primary">Save </button>
         {!! Form::close() !!}
       </div>
     </div>

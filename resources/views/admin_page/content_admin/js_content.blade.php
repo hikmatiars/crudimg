@@ -7,10 +7,15 @@ $(document).ready(function(){
           url : 'content/',
           data : new FormData($("#upload_form")[0]),
           dataType : 'json',
-          type : 'post',
+          type : 'POST',
+          cache : false,
+          contentType :false ,
+          processData : false,
           success : function(data){
-            console.log(data);
-          },
+            // $("#item"+data.id).append("<div class='grid-item'><div class='panel-body'></div></div>");
+          }, error : function(xhr, error){
+            console.log(error);
+          }
         });
       });
       $(".detail").click(function(){
@@ -66,13 +71,14 @@ $(document).ready(function(){
       
       	
       $("#deleteBtn").click(function(){
+        var id = $("#imgId").val();
        var data = {
           '_token': $('input[name=_token]').val(),
           'id' : $("#imgId").val()
         };
         $.ajax({
           type : "DELETE",
-          url  : url,
+          url  : 'content/'+id,
           data : data,
           dataType : "json",
           success : function(data){

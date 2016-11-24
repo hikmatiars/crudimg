@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
+use DB;
 class Content extends Model
 {
+    // public $content;
   	public static function save_image($image, $image_name, $title, $thumb_size, $inputContent, $method, $id=''){
         if ($method === 'POST'){
             $content = new Content();
         }else if($method === 'PUT') {
            $content = Content::find($id);
         }
+        
   		  $content->img_name = $title;
         $content->thumb_size = $thumb_size;
         $content->img = $image_name;
@@ -25,5 +28,6 @@ class Content extends Model
          $image->resize(400,200)->save($directory.'/'.$image_name);
          $image->resize(200,100)->save($directory.'/'.'thumb_'.$image_name);
          }
+         return $content; 
   	}
 }
